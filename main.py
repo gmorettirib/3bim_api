@@ -9,6 +9,13 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+@app.on_event("startup")
+def criar_tabelas():
+    Base.metadata.create_all(bind=engine)
+    
+def buscar_time(db: Session, filme_id: int):
+    return db.query(timeDB).filter(timeDB.id == time_id).first()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
